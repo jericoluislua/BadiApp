@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">BadiApp</string>
-    <string name="search_title">Search</string>
-    <string name="search_hint">Search</string>
     <string name="picture">picture</string>
     <string name="badaarberg">Schwimmbad Aarberg (BE)</string>
     <string name="badadelboden">Schwimmbad Gruebi Adelboden (BE)</string>

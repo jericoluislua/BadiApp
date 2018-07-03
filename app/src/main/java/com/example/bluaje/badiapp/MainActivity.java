@@ -32,33 +32,14 @@ public class MainActivity extends AppCompatActivity {
         addBadisToList();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search_details, menu);
-
-
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-        return true;
-    }
-
     private void addBadisToList(){
-        Intent intent = new Intent(getApplicationContext(), BadiDetailsActivity.class);
-        String selected = parent.getItemAtPosition(position).toString();
+
         String badi = "";
         ListView badis = (ListView) findViewById(R.id.badiliste);
         badiliste = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
         for (ArrayList<String> b : allBadis) {
             badiliste.add(b.get(5)+" - "+b.get(1));
-            if(badi.equals(selected)) {
-                intent.putExtra("badi",b.get(0));
-            }
         }
 
         //badiliste.add(getString(R.string.badaarberg));
@@ -69,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-
+                Intent intent = new Intent(getApplicationContext(), BadiDetailsActivity.class);
+                String selected = parent.getItemAtPosition(position).toString();
                 //Kleine Infobox anzeigen
                 Toast.makeText(MainActivity.this, selected, Toast.LENGTH_SHORT).show();
                 //Intent mit Zusatzinformationen - hier die Badi Nummer
