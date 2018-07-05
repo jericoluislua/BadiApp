@@ -3,24 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     tools:context="com.example.bluaje.badiapp.MainActivity"
     android:orientation="vertical">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/colorPrimaryDark"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
         <TextView
             android:id="@+id/badistaedte"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:background="@android:color/darker_gray"
+            android:paddingBottom="10sp"
+            android:paddingLeft="15sp"
+            android:paddingTop="10sp"
+            android:textSize="20sp"/>
 
         <ListView
             android:layout_width="match_parent"

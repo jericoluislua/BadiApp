@@ -23,7 +23,6 @@ import java.util.List;
 
 public class BadiDetailsActivity extends AppCompatActivity {
 
-    //private static String TAG = "badiInfo";
     private String badiId;
     private String name;
 
@@ -36,6 +35,8 @@ public class BadiDetailsActivity extends AppCompatActivity {
 
         badiId = intent.getStringExtra("badi");
         name = intent.getStringExtra("name");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
         TextView text = (TextView) findViewById(R.id.badiinfos);
         text.setText(name);
         getBadiTemp("http://www.wiewarm.ch/api/v1/bad.json/" + badiId);

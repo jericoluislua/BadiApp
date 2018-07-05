@@ -35,38 +35,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         TextView text = (TextView) findViewById(R.id.badikantone);
-        text.setText("     Kantone");
+        text.setText("Kantone");
         addBadisToList();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        final SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-
-                if(s == null){
-                }
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                badiliste.getFilter().filter(s);
-                return true;
-            }
-        });
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchItem.expandActionView();
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                return false;
+                return true;
             }
 
             @Override
@@ -77,6 +61,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                if(s == null){
+                }
+                badiliste.getFilter().filter(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                return true;
+            }
+        });
 
 
         return super.onCreateOptionsMenu(menu);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         for (ArrayList<String> b : allBadis) {
             //b.get(6) = kanton
             //b.get(5) = stadt
-            hs.add("    " + b.get(6)/*+" - "+b.get(1)*/);
+            hs.add(b.get(6)/*+" - "+b.get(1)*/);
         }
         badiliste.addAll(hs);
 

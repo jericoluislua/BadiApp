@@ -3,6 +3,7 @@ package com.example.bluaje.badiapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,13 +20,17 @@ import java.util.TreeSet;
 public class BadiTypenActivity extends AppCompatActivity {
 
     ArrayAdapter badiliste;
-
+    private String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badi_typen);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
         TextView text = (TextView) findViewById(R.id.baditypen);
-        text.setText("Badi Typen");
+        text.setText(name + "(Stadt)");
         addBadisToList();
     }
 
@@ -47,7 +52,7 @@ public class BadiTypenActivity extends AppCompatActivity {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BadisActivity.class);
                 String selected = parent.getItemAtPosition(position).toString();
-                //kleine Infobox anzeigne
+                //kleine Infobox anzeigen
                 Toast.makeText(BadiTypenActivity.this, selected, Toast.LENGTH_SHORT).show();
                 //Intent mit Zusatzinformationen - hier die Badi Nummer
                 String ortschaft = getIntent().getExtras().getString("name");

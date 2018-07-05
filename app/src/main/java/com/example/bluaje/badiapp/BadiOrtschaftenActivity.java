@@ -33,24 +33,23 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_badi_ortschaften);
         Intent intent = getIntent();
 
         //ImageView img = (ImageView) findViewById(R.id.badilogo);
         //img.setImageResource(R.drawable.badi);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        addBadisToList();
         TextView text = (TextView) findViewById(R.id.badistaedte);
         name = intent.getStringExtra("name");
-        text.setText(/*name*/"Staedte");
-        addBadisToList();
+        text.setText(name + "(Kanton)");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        final SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -69,7 +68,7 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
         });
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchItem.expandActionView();
+        //searchItem.expandActionView();
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {

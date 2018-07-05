@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    tools:context="com.example.bluaje.badiapp.BadiDetailsActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    >
+    tools:context="com.example.bluaje.badiapp.BadiDetailsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
 
     <TextView
         android:id="@+id/badiinfos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        android:background="@android:color/darker_gray"
+        android:paddingBottom="10sp"
+        android:paddingLeft="15sp"
+        android:paddingTop="10sp"
+        android:textSize="20sp"/>
+
     <ListView
+        android:id="@+id/badidetails"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/badidetails"
-        android:layout_weight="11.05"/>
+        android:layout_weight="11.05" />
 </LinearLayout>

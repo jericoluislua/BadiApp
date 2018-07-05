@@ -3,6 +3,7 @@ package com.example.bluaje.badiapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,11 +21,18 @@ import java.util.TreeSet;
 public class BadisActivity extends AppCompatActivity {
 
     ArrayAdapter badiliste;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_badi_typen);
+        setContentView(R.layout.activity_badis);
+        Intent intent = getIntent();
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        TextView text = (TextView) findViewById(R.id.badis);
+        name = intent.getStringExtra("name");
+        text.setText(name);
         addBadisToList();
     }
 
@@ -51,7 +60,7 @@ public class BadisActivity extends AppCompatActivity {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BadiDetailsActivity.class);
                 String selected = parent.getItemAtPosition(position).toString();
-                //kleine Infobox anzeigne
+                //kleine Infobox anzeigen
                 Toast.makeText(BadisActivity.this, selected, Toast.LENGTH_SHORT).show();
                 //Intent mit Zusatzinformationen - hier die Badi Nummer
                 intent.putExtra("badi", allBadis.get(position).get(0));
