@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">BadiApp</string>
+    <string name="action_search">Search</string>
+    <string name="message_search"></string>
     <string name="picture">picture</string>
     <string name="badaarberg">Schwimmbad Aarberg (BE)</string>
     <string name="badadelboden">Schwimmbad Gruebi Adelboden (BE)</string>
     <string name="badbern">Stadtberner Baeder Bern (BE)</string>
     <string name="TAG">badiInfo</string>
-    <string name="badiID" />
-    <string name="name" />
 </resources>

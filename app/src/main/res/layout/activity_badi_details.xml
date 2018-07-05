@@ -11,12 +11,12 @@
     android:orientation="vertical"
     android:weightSum="1"
     >
+
     <TextView
-        android:text="badi 1"
+        android:id="@+id/badiinfos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/badiinfos"
-        android:textSize="20dp"/>
+        android:textSize="20sp" />
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

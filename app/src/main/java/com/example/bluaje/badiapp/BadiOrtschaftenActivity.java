@@ -1,16 +1,21 @@
 package com.example.bluaje.badiapp;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,23 +24,25 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class MainActivity extends AppCompatActivity {
+public class BadiOrtschaftenActivity extends AppCompatActivity {
 
     ArrayAdapter badiliste;
-    //private final static String AARBERG = "Schwimmbad Aarberg (BE)";
-    //private final static String ADELBODEN = "Schwimmbad Gruebi Adelboden (BE)";
-    //private final static String BERN = "Stadtberner Baeder Bern (BE)";
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+
         //ImageView img = (ImageView) findViewById(R.id.badilogo);
         //img.setImageResource(R.drawable.badi);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        TextView text = (TextView) findViewById(R.id.badikantone);
-        text.setText("     Kantone");
+        TextView text = (TextView) findViewById(R.id.badistaedte);
+        name = intent.getStringExtra("name");
+        text.setText(/*name*/"Staedte");
         addBadisToList();
     }
 
@@ -96,53 +103,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addBadisToList(){
-
-        Set<String> hs = new TreeSet<>();
+    private void addBadisToList() {
         ListView badis = (ListView) findViewById(R.id.badiliste);
         badiliste = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
+        Set<String> orte = new TreeSet<>();
         for (ArrayList<String> b : allBadis) {
-            //b.get(6) = kanton
-            //b.get(5) = stadt
-            hs.add("    " + b.get(6)/*+" - "+b.get(1)*/);
-        }
-        badiliste.addAll(hs);
+            if(b.get(6).equals(getIntent().getExtras().getString("name"))){
+                orte.add(b.get(5));
 
-        //badiliste.add(getString(R.string.badaarberg));
-        //badiliste.add(getString(R.string.badadelboden));
-        //badiliste.add(getString(R.string.badbern));
+            }
+        }
+        badiliste.addAll(orte);
         badis.setAdapter(badiliste);
 
         AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), BadiOrtschaftenActivity.class);
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), BadiTypenActivity.class);
                 String selected = parent.getItemAtPosition(position).toString();
-                //Kleine Infobox anzeigen
-                Toast.makeText(MainActivity.this, selected, Toast.LENGTH_SHORT).show();
+                //kleine Infobox anzeigne
+                Toast.makeText(BadiOrtschaftenActivity.this, selected, Toast.LENGTH_SHORT).show();
                 //Intent mit Zusatzinformationen - hier die Badi Nummer
                 intent.putExtra("badi", allBadis.get(position).get(0));
                 intent.putExtra("name", selected);
                 startActivity(intent);
-                //if (selected.equals(getString(R.string.badaarberg))) {
-                //    intent.putExtra("badi", "71");
-
-                //} else if (selected.equals(getString(R.string.badadelboden))) {
-                //    intent.putExtra("badi", "27");
-
-                //} else if (selected.equals(getString(R.string.badbern))) {
-                //    intent.putExtra("badi", "6");
-
-                //} else {
-                //    intent.putExtra("badi", "55");
-
-                //}
             }
         };
         badis.setOnItemClickListener(mListClickedHandler);
-
     }
-
-
 }

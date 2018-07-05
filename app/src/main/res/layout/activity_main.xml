@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     tools:context="com.example.bluaje.badiapp.MainActivity"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <!--<SearchView
         android:layout_width="match_parent"
         android:layout_height="match_parent" /> -->
@@ -19,6 +19,22 @@
         android:layout_gravity="center"
         android:contentDescription="@string/picture" />-->
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:id="@+id/badikantone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10sp"
+        android:textSize="20sp"
+        tools:text="Kantone" />
     <ListView
         android:id="@+id/badiliste"
         android:layout_width="match_parent"
