@@ -29,6 +29,7 @@ public class BadiDetailsActivity extends AppCompatActivity {
 
     private String badiId;
     private String name;
+    private String id;
     private String weather;
     private String lat;
     private String lon;
@@ -42,6 +43,7 @@ public class BadiDetailsActivity extends AppCompatActivity {
 
         badiId = intent.getStringExtra("badi");
         name = intent.getStringExtra("name");
+        id = intent.getStringExtra("id");
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         TextView text = (TextView) findViewById(R.id.badiinfos);
@@ -50,7 +52,7 @@ public class BadiDetailsActivity extends AppCompatActivity {
 
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
         for (ArrayList<String> b : allBadis) {
-            if(b.get(0).equals(badiId)){
+            if(b.get(0).equals(id)){
                 lat = b.get(10);
                 lon = b.get(11);
             }

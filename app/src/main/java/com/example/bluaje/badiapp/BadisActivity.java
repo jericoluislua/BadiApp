@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
@@ -22,6 +23,7 @@ public class BadisActivity extends AppCompatActivity {
 
     ArrayAdapter badiliste;
     private String name;
+    private ArrayList<String> badiId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +43,22 @@ public class BadisActivity extends AppCompatActivity {
         badiliste = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
         Set<String> badi = new TreeSet<>();
+        Set<String> tsbadiId = new TreeSet<>();
         for (ArrayList<String> b : allBadis) {
             if((b.get(9).equals(getIntent().getExtras().getString("name"))) && (b.get(5).equals(getIntent().getExtras().getString("ort")))){
-
                 if(b.get(2).isEmpty() || b.get(2).equals("")){
                     badi.add(b.get(1) + " - " + b.get(3));
+                    tsbadiId.add(b.get(0));
                 }
                 else{
                     badi.add(b.get(1) + " - " + b.get(2));
+                    tsbadiId.add(b.get(0));
                 }
             }
         }
         badiliste.addAll(badi);
         badis.setAdapter(badiliste);
+        badiId.addAll(tsbadiId);
 
         AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
@@ -65,6 +70,7 @@ public class BadisActivity extends AppCompatActivity {
                 //Intent mit Zusatzinformationen - hier die Badi Nummer
                 intent.putExtra("badi", allBadis.get(position).get(0));
                 intent.putExtra("name", selected);
+                intent.putExtra("id", badiId.get(position));
                 startActivity(intent);
             }
         };
