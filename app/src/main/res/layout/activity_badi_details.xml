@@ -28,8 +28,7 @@
     <ListView
         android:id="@+id/badidetails"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="11.05" />
+        android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/weatherPic"
         android:layout_width="100dp"
@@ -37,7 +36,6 @@
     <ListView
         android:id="@+id/weatherdetails"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="11.05" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
