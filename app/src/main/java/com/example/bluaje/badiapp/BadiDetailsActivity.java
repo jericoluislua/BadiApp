@@ -55,7 +55,7 @@ public class BadiDetailsActivity extends AppCompatActivity {
                 lon = b.get(11);
             }
         }
-        getWeatherTemp();
+        getWeatherTemp("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&APPID=99880f84f208ac9e9322388ca7c037a5");
     }
 
     @SuppressLint("StaticFieldLeak")
