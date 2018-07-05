@@ -50,29 +50,30 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.expandActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
-                if(s == null){
+                /*if(s == null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(BadiOrtschaftenActivity.this);
                     builder.setMessage("Kein \"" + s + "\" vorhanden.").setTitle(R.string.errordialog_title);
                     AlertDialog dialog = builder.create();
-                }
+                }*/
+                badiliste.getFilter().filter(s);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                badiliste.getFilter().filter(s);
+
                 return true;
             }
         });
 
-        /*MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchItem.expandActionView();
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -85,7 +86,7 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
                 addBadisToList();
                 return true;
             }
-        });*/
+        });
 
 
 

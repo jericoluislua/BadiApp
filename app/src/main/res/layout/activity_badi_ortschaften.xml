@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     tools:context="com.example.bluaje.badiapp.MainActivity"
     android:orientation="vertical">
@@ -13,7 +14,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimaryDark"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <TextView
             android:id="@+id/badistaedte"
@@ -29,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/badiliste"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:paddingLeft="11sp"/>
 
 </LinearLayout>

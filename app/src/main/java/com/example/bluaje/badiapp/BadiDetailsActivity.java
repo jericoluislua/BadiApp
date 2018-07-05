@@ -30,7 +30,8 @@ public class BadiDetailsActivity extends AppCompatActivity {
     private String badiId;
     private String name;
     private String weather;
-    private ProgressDialog mDialog;
+    private String lat;
+    private String lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,16 @@ public class BadiDetailsActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         TextView text = (TextView) findViewById(R.id.badiinfos);
         text.setText(name);
-        mDialog = ProgressDialog.show(this, "Lade Badi-Infos", "Bitte warten...");
         getBadiTemp("http://www.wiewarm.ch/api/v1/bad.json/" + badiId);
 
+        final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
+        for (ArrayList<String> b : allBadis) {
+            if(b.get(0).equals(badiId)){
+                lat = b.get(10);
+                lon = b.get(11);
+            }
+        }
+        getWeatherTemp();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -154,8 +162,6 @@ public class BadiDetailsActivity extends AppCompatActivity {
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //Lesen des Antwortcodes der Website
                     int code = conn.getResponseCode();
-                    //Nun können wir den Lade Dialog wieder ausblenden
-                    mDialog.dismiss();
                     //Hier lesen wir die Nachricht der Website wiewarm uns speichern es in msg
                     msg = IOUtils.toString(conn.getInputStream());
                     //und loggen den Statuscode in der Konsole

@@ -30,7 +30,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="11.05" />
-
+    <ImageView
+        android:id="@+id/weatherPic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <ListView
         android:id="@+id/weatherdetails"
         android:layout_width="fill_parent"
