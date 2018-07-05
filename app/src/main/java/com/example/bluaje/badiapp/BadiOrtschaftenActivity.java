@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +57,9 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String s) {
 
                 if(s == null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BadiOrtschaftenActivity.this);
+                    builder.setMessage("Kein \"" + s + "\" vorhanden.").setTitle(R.string.errordialog_title);
+                    AlertDialog dialog = builder.create();
                 }
                 return true;
             }
@@ -67,8 +71,8 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
             }
         });
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        //searchItem.expandActionView();
+        /*MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.expandActionView();
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -81,7 +85,7 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
                 addBadisToList();
                 return true;
             }
-        });
+        });*/
 
 
 

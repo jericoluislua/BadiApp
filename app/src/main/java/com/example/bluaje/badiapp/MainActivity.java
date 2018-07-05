@@ -2,6 +2,7 @@ package com.example.bluaje.badiapp;
 
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchItem.expandActionView();
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -64,9 +64,10 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
-                if(s == null){
-                }
+                //AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//
+                //builder.setMessage("Kein" + s + " vorhanden.").setTitle(R.string.errordialog_title);
+                //if(s == )
                 badiliste.getFilter().filter(s);
                 return true;
             }
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        searchItem.expandActionView();
 
 
         return super.onCreateOptionsMenu(menu);

@@ -25,7 +25,6 @@
         android:paddingLeft="15sp"
         android:paddingTop="10sp"
         android:textSize="20sp"/>
-
     <ListView
         android:id="@+id/badidetails"
         android:layout_width="fill_parent"

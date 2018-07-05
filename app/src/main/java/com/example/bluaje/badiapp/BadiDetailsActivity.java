@@ -1,5 +1,6 @@
 package com.example.bluaje.badiapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
@@ -42,6 +43,7 @@ public class BadiDetailsActivity extends AppCompatActivity {
         getBadiTemp("http://www.wiewarm.ch/api/v1/bad.json/" + badiId);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void getBadiTemp(String url){
         //Den ArrayAdapter wollen wir später verwenden um die Temperaturen zu speichern
         //angezeigt sollen sie im Format der simple_list_item_1 werden (einem Standard Android Element)
@@ -84,10 +86,13 @@ public class BadiDetailsActivity extends AppCompatActivity {
                     List<String> badiInfos = parseBadiTemp(result);
                     //Jetzt müssen wir nur noch alle Elemente der Liste badidetails hinzufügen.
                     //Dazu holen wir die ListView badidetails vom GUI
+
                     ListView badidetails = (ListView) findViewById(R.id.badidetails);
                     //und befüllen unser ArrayAdapter den wir am Anfang definiert haben (braucht es zum befüllen eines ListViews)
+
                     temps.addAll(badiInfos);
                     //Mit folgender Zeile fügen wir den befüllten ArrayAdapter der ListView hinzu:
+
                     badidetails.setAdapter(temps);
                 } catch (JSONException e) {
                     Log.v(getString(R.string.TAG), e.toString());
