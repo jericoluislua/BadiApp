@@ -30,4 +30,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="11.05" />
+
+    <ListView
+        android:id="@+id/weatherdetails"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="11.05" />
+
 </LinearLayout>

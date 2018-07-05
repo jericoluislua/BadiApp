@@ -1,6 +1,7 @@
 package com.example.bluaje.badiapp;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
@@ -9,10 +10,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +29,8 @@ public class BadiDetailsActivity extends AppCompatActivity {
 
     private String badiId;
     private String name;
+    private String weather;
+    private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,9 @@ public class BadiDetailsActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         TextView text = (TextView) findViewById(R.id.badiinfos);
         text.setText(name);
+        mDialog = ProgressDialog.show(this, "Lade Badi-Infos", "Bitte warten...");
         getBadiTemp("http://www.wiewarm.ch/api/v1/bad.json/" + badiId);
+
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -126,6 +133,114 @@ public class BadiDetailsActivity extends AppCompatActivity {
                     return resultList;
                 }
             }
+        }.execute(url);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void getWeatherTemp(String url) {
+        //dieser ArrayAdapter wird später verwendet um die Temperaturen zu speichern
+        final ArrayAdapter temps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
+        //Hier starten wir einen asynchronen Task, da Android verlangt dass die Datenbearbeitung und GUI getrennt sind
+        new AsyncTask<String, String, String>() {
+            //der AsyncTask verlangt die Implementation der Methode doInBackground, nach dieser wird immer die Methode onPostExecute ausgeführt
+            @Override
+            protected String doInBackground(String[] weather) {
+                //in dieser Variable wird die Antwort der Seite wiewarm.ch gespeichert.
+                String msg = "";
+                try {
+                    URL url = new URL(weather[0]);
+                    //Hier bauen wir die Verbindung auf:
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    //Lesen des Antwortcodes der Website
+                    int code = conn.getResponseCode();
+                    //Nun können wir den Lade Dialog wieder ausblenden
+                    mDialog.dismiss();
+                    //Hier lesen wir die Nachricht der Website wiewarm uns speichern es in msg
+                    msg = IOUtils.toString(conn.getInputStream());
+                    //und loggen den Statuscode in der Konsole
+                    Log.i(getString(R.string.TAG), Integer.toString(code));
+                } catch (Exception e) {
+                    Log.i(getString(R.string.TAG), e.toString());
+                }
+                return msg;
+            }
+
+            public void onPostExecute(String result) {
+                try {
+                    //parseBadiTemp ist eine Methode zum verarbeiten und speichern der Daten
+                    List<String> weatherInfos = parseWeatherTemp(result);
+                    //Hier wird die ListView der Badidetails geholt
+                    ListView weatherdetails = (ListView) findViewById(R.id.weatherdetails);
+                    //wir füller nun die Daten in den ArrayAdapter
+                    temps.addAll(weatherInfos);
+                    //Hier wird der ArrayAdapter der ListView hinzugefügt
+                    weatherdetails.setAdapter(temps);
+                } catch(JSONException e) {
+                    Log.i(getString(R.string.TAG), e.toString());
+                }
+            }
+
+            private List parseWeatherTemp(String jonString)throws JSONException{
+                ArrayList<String> resultList = new ArrayList<String>();
+                JSONObject jsonObject = new JSONObject(jonString);
+                JSONArray a = jsonObject.getJSONArray("weather");
+                JSONObject object = a.getJSONObject(0);
+                weather = object.getString("main");
+                ImageView img = (ImageView) findViewById(R.id.weatherPic);
+                switch (weather){
+                    case "Clouds":
+                        //Bild
+                        img.setImageResource(R.drawable.clouds);
+                        resultList.add("Bewölkt");
+                        break;
+                    case "Sun":
+                        //Bild
+                        img.setImageResource(R.drawable.sun);
+                        resultList.add("Sonne");
+                        break;
+                    case "Rain":
+                        //Bild
+                        img.setImageResource(R.drawable.rain);
+                        resultList.add("Regen");
+                        break;
+                    case "Snow":
+                        //Bild
+                        img.setImageResource(R.drawable.snow);
+                        resultList.add("Schnee");
+                        break;
+
+                    case "Thunderstorm":
+                        //Bild
+                        img.setImageResource(R.drawable.thunderstorm);
+                        resultList.add("Gewitter");
+                        break;
+                    default:
+                        img.setImageResource(R.drawable.notfound);
+                        resultList.add("Wetterart ist nicht definiert");
+                        break;
+                }
+
+                JSONObject wetter = jsonObject.getJSONObject("main");
+                Iterator keys = wetter.keys();
+
+                double temp_k = wetter.getDouble("temp");
+                double temp_c = temp_k- 273.15;
+                resultList.add("Momentan"+ (float)temp_c+" °C");
+
+                double max_k = wetter.getDouble("temp_max");
+                double max_c = max_k-273.15;
+                resultList.add("Max: "+(float) max_c+"°C");
+
+                double min_k = wetter.getDouble("temp_min");
+                double min_c= min_k-273.15;
+                resultList.add("Min: " + (float)min_c +"°C");
+
+
+
+                return resultList;
+            }
+
         }.execute(url);
     }
 
