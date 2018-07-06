@@ -164,8 +164,10 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
                         String name = subObj.getString("beckenname");
                         //und unter temp ist die Temperatur angegeben
                         String temp = subObj.getString("temp");
+                        //und unter status ist die Oefnnungstatus angegeben
+                        String status = subObj.getString("status");
                         //Sobald wir die Daten haben, fügen wir sie unserer Liste hinzu:
-                        resultList.add(name + ": " + temp + " Grad Celsius");
+                        resultList.add(name + " : " + temp + " Grad Celsius" + " : " + status);
                     }
                     return resultList;
                 }
