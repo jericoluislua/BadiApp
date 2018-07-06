@@ -246,7 +246,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
 
                 double temp_k = wetter.getDouble("temp");
                 double temp_c = temp_k- 273.15;
-                resultList.add("Momentan"+ (float)temp_c+" °C");
+                resultList.add("Momentan: "+ (float)temp_c+" °C");
 
                 double max_k = wetter.getDouble("temp_max");
                 double max_c = max_k-273.15;
