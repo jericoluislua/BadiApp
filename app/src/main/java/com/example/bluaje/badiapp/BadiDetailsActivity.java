@@ -1,7 +1,10 @@
 package com.example.bluaje.badiapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +50,9 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
         setContentView(R.layout.activity_badi_details);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -74,6 +79,11 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
             }
         }
         getWeatherTemp("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&APPID=99880f84f208ac9e9322388ca7c037a5");
+        }
+        else {
+            //keine Internetverbindung
+            setContentView(R.layout.activity_internet_error);
+        }
     }
 
     @SuppressLint("StaticFieldLeak")

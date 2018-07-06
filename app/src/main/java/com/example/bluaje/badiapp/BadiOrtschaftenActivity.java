@@ -1,6 +1,9 @@
 package com.example.bluaje.badiapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -33,18 +36,22 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
         setContentView(R.layout.activity_badi_ortschaften);
         Intent intent = getIntent();
-
-        //ImageView img = (ImageView) findViewById(R.id.badilogo);
-        //img.setImageResource(R.drawable.badi);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         addBadisToList();
         TextView text = (TextView) findViewById(R.id.badistaedte);
         name = intent.getStringExtra("name");
         text.setText(name + "(Kanton)");
+        }
+        else {
+            //keine Internetverbindung
+            setContentView(R.layout.activity_internet_error);
+        }
     }
 
     @Override

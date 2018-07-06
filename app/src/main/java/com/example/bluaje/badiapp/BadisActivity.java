@@ -1,6 +1,9 @@
 package com.example.bluaje.badiapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +31,9 @@ public class BadisActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
         setContentView(R.layout.activity_badis);
         Intent intent = getIntent();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -36,6 +42,11 @@ public class BadisActivity extends AppCompatActivity {
         name = intent.getStringExtra("name");
         text.setText(name);
         addBadisToList();
+        }
+        else {
+            //keine Internetverbindung
+            setContentView(R.layout.activity_internet_error);
+        }
     }
 
     private void addBadisToList() {
