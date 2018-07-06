@@ -14,6 +14,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,8 +31,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-public class BadiDetailsActivity extends AppCompatActivity {
+public class BadiDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private String badiId;
     private String name;
@@ -58,6 +67,9 @@ public class BadiDetailsActivity extends AppCompatActivity {
             }
         }
         getWeatherTemp("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&APPID=99880f84f208ac9e9322388ca7c037a5");
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -252,4 +264,20 @@ public class BadiDetailsActivity extends AppCompatActivity {
         }.execute(url);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
+        Integer iterator = 0;
+        for (ArrayList<String> b : allBadis) {
+            if(iterator != 0) {
+                if(b.get(5).equals(name) && b.get(0).equals(id)){
+                    LatLng location = new LatLng(Double.parseDouble(b.get(10)), Double.parseDouble(b.get(11)));
+                    googleMap.addMarker(new MarkerOptions().position(location)
+                            .title(b.get(3)));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                }
+            }
+            iterator++;
+        }
+    }
 }

@@ -15,7 +15,6 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-
     <TextView
         android:id="@+id/badiinfos"
         android:layout_width="fill_parent"
@@ -25,6 +24,15 @@
         android:paddingLeft="15sp"
         android:paddingTop="10sp"
         android:textSize="20sp"/>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="292dp"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
     <ListView
         android:id="@+id/badidetails"
         android:layout_width="fill_parent"
