@@ -37,6 +37,15 @@
         android:id="@+id/badidetails"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/badiwetter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:paddingBottom="10sp"
+        android:paddingLeft="15sp"
+        android:paddingTop="10sp"
+        android:textSize="20sp"/>
     <ImageView
         android:id="@+id/weatherPic"
         android:layout_width="100dp"
