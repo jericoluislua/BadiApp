@@ -7,17 +7,6 @@
     android:id="@+id/layout"
     tools:context="com.example.bluaje.badiapp.MainActivity"
     android:orientation="vertical">
-    <!--<SearchView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" /> -->
-
-
-    <!--<ImageView
-        android:id="@+id/badilogo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:contentDescription="@string/picture" />-->
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"

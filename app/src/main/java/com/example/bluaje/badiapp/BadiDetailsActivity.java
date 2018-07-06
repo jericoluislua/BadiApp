@@ -274,12 +274,13 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
+        float zoomLevel = 16.0f;
         for (ArrayList<String> b : allBadis) {
             if(b.get(0).equals(id)){
                 LatLng sydney = new LatLng(Double.parseDouble(b.get(10)), Double.parseDouble(b.get(11)));
                 googleMap.addMarker(new MarkerOptions().position(sydney)
                         .title(b.get(3)));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
             }
         }
     }
