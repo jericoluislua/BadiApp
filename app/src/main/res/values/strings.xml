@@ -7,7 +7,7 @@
     <string name="badadelboden">Schwimmbad Gruebi Adelboden (BE)</string>
     <string name="badbern">Stadtberner Baeder Bern (BE)</string>
     <string name="TAG">badiInfo</string>
-    <string name="errordialog_title">E R R O R</string>
+    <string name="errordialog_title">oops kein Netz...</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
 </resources>

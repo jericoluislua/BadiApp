@@ -1,8 +1,10 @@
 package com.example.bluaje.badiapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -30,14 +32,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //ImageView img = (ImageView) findViewById(R.id.badilogo);
-        //img.setImageResource(R.drawable.badi);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        TextView text = (TextView) findViewById(R.id.badikantone);
-        text.setText("Kantone");
-        addBadisToList();
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //Internetverbindung besteht
+            setContentView(R.layout.activity_main);
+            //ImageView img = (ImageView) findViewById(R.id.badilogo);
+            //img.setImageResource(R.drawable.badi);
+            Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+            setSupportActionBar(myToolbar);
+            TextView text = (TextView) findViewById(R.id.badikantone);
+            text.setText("Kantone");
+            addBadisToList();
+        }
+        else {
+            //keine Internetverbindung
+            setContentView(R.layout.activity_internet_error);
+        }
     }
 
     @Override
@@ -111,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
         }
         badiliste.addAll(hs);
 
-        //badiliste.add(getString(R.string.badaarberg));
-        //badiliste.add(getString(R.string.badadelboden));
-        //badiliste.add(getString(R.string.badbern));
         badis.setAdapter(badiliste);
 
         AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
@@ -127,19 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("badi", allBadis.get(position).get(0));
                 intent.putExtra("name", selected);
                 startActivity(intent);
-                //if (selected.equals(getString(R.string.badaarberg))) {
-                //    intent.putExtra("badi", "71");
-
-                //} else if (selected.equals(getString(R.string.badadelboden))) {
-                //    intent.putExtra("badi", "27");
-
-                //} else if (selected.equals(getString(R.string.badbern))) {
-                //    intent.putExtra("badi", "6");
-
-                //} else {
-                //    intent.putExtra("badi", "55");
-
-                //}
             }
         };
         badis.setOnItemClickListener(mListClickedHandler);
