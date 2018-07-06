@@ -46,6 +46,11 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_badi_details);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         Intent intent = getIntent();
 
         badiId = intent.getStringExtra("badi");
@@ -67,9 +72,6 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
             }
         }
         getWeatherTemp("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&APPID=99880f84f208ac9e9322388ca7c037a5");
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -235,6 +237,11 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
                         img.setImageResource(R.drawable.thunderstorm);
                         resultList.add("Gewitter");
                         break;
+                    case "Drizzle":
+                        //Bild
+                        img.setImageResource(R.drawable.drizzle);
+                        resultList.add("Nieseln");
+                        break;
                     default:
                         img.setImageResource(R.drawable.notfound);
                         resultList.add("Wetterart ist nicht definiert");
@@ -246,7 +253,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
 
                 double temp_k = wetter.getDouble("temp");
                 double temp_c = temp_k- 273.15;
-                resultList.add("Momentan: "+ (float)temp_c+" °C");
+                resultList.add("Momentan"+ (float)temp_c+" °C");
 
                 double max_k = wetter.getDouble("temp_max");
                 double max_c = max_k-273.15;
@@ -267,17 +274,13 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
-        Integer iterator = 0;
         for (ArrayList<String> b : allBadis) {
-            if(iterator != 0) {
-                if(b.get(5).equals(name) && b.get(0).equals(id)){
-                    LatLng location = new LatLng(Double.parseDouble(b.get(10)), Double.parseDouble(b.get(11)));
-                    googleMap.addMarker(new MarkerOptions().position(location)
-                            .title(b.get(3)));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-                }
+            if(b.get(0).equals(id)){
+                LatLng sydney = new LatLng(Double.parseDouble(b.get(10)), Double.parseDouble(b.get(11)));
+                googleMap.addMarker(new MarkerOptions().position(sydney)
+                        .title(b.get(3)));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             }
-            iterator++;
         }
     }
 }
