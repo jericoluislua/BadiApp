@@ -106,7 +106,7 @@ public class BadiOrtschaftenActivity extends AppCompatActivity {
 
         }
     }
-
+    //Hier werden alle Daten aus dem CSV gefiltert und der Liste hinzugefügt.
     private void addBadisToList() {
         ListView badis = (ListView) findViewById(R.id.badiliste);
         badiliste = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);

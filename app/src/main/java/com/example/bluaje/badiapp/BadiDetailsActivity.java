@@ -52,8 +52,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-
-        badiId = intent.getStringExtra("badi");
+        
         name = intent.getStringExtra("name");
         id = intent.getStringExtra("id");
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -62,7 +61,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
         title.setText(name);
         TextView wetter = (TextView) findViewById(R.id.badiwetter);
         wetter.setText("Wetter");
-        getBadiTemp("http://www.wiewarm.ch/api/v1/bad.json/" + badiId);
+        getBadiTemp("http://www.wiewarm.ch/api/v1/bad.json/" + id);
 
         final ArrayList<ArrayList<String>> allBadis = BadiData.allBadis(getApplicationContext());
         for (ArrayList<String> b : allBadis) {
