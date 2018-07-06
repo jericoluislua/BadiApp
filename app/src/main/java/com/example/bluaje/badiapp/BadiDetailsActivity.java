@@ -7,8 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,7 +55,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-        
+
         name = intent.getStringExtra("name");
         id = intent.getStringExtra("id");
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -124,6 +127,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
                     //Mit folgender Zeile fügen wir den befüllten ArrayAdapter der ListView hinzu:
 
                     badidetails.setAdapter(temps);
+                    setListViewHeightBasedOnChildren(badidetails);
                 } catch (JSONException e) {
                     Log.v(getString(R.string.TAG), e.toString());
                 }
@@ -197,6 +201,7 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
                     temps.addAll(weatherInfos);
                     //Hier wird der ArrayAdapter der ListView hinzugefügt
                     weatherdetails.setAdapter(temps);
+                    setListViewHeightBasedOnChildren(weatherdetails);
                 } catch(JSONException e) {
                     Log.i(getString(R.string.TAG), e.toString());
                 }
@@ -282,5 +287,28 @@ public class BadiDetailsActivity extends AppCompatActivity implements OnMapReady
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
             }
         }
+    }
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 }
